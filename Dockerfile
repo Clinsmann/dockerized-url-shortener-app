@@ -6,7 +6,9 @@ ADD . /dockerized-url-shortener-app
 
 WORKDIR /dockerized-url-shortener-app
 
-RUN npm i
+COPY package.json /dockerized-url-shortener-app
+
+RUN npm install
 
 EXPOSE 80
 
