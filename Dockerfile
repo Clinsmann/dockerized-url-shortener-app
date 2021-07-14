@@ -1,14 +1,12 @@
-FROM node:14-alpine
+FROM node:14
 
-RUN mkdir /dockerized-url-shortener-app
+WORKDIR /usr/src/app
 
-ADD . /dockerized-url-shortener-app
-
-WORKDIR /dockerized-url-shortener-app
-
-COPY package.json /dockerized-url-shortener-app
+COPY package*.json ./
 
 RUN npm install
+
+COPY . .
 
 EXPOSE 80
 
