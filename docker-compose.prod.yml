@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  migration:
+    build:
+      context: .
+      dockerfile: Dockerfile.migration
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "${PORT}:8000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}

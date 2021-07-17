@@ -6,15 +6,16 @@ import app from "./app";
 import config from "./connection/connection";
 
 dotenv.config();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 createConnection(config)
   .then(() => {
-    app.listen(port, () =>
+    app.listen(port, () => {
+      console.log(`application successfully connected to database...`)
       console.log(
-        `app is now running on port ${port} in ${process.env.NODE_ENV} mode`
+        `application is now running on port ${port} in ${process.env.NODE_ENV} mode...`
       )
-    );
+    });
   })
   .catch((err) => {
     console.log("Unable to connect to db", err);
