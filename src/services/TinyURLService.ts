@@ -23,7 +23,7 @@ export const encode = async (req: Request, res: Response): Promise<void> => {
 
     const updatedRecord = await Repository.save({
       ...record,
-      tiny_url: `${req.protocol}://${req.hostname}:${process.env.PORT}/${tinyUrl}`,
+      tiny_url: getUrl(tinyUrl, req),
     });
 
     res.status(HttpStatus.OK).json({ shortLink: updatedRecord.tiny_url });
@@ -39,9 +39,7 @@ export const decode = async (req: Request, res: Response): Promise<void> => {
   const Repository = getRepository(TinyURLEntity);
   try {
     let tinyUrl: TinyURLEntity = await TinyURLEntity.findOne({
-      tiny_url: String(
-        `${req.protocol}://${req.hostname}:${process.env.PORT}/${req.params.url}`
-      ),
+      tiny_url: getUrl(req.params.url, req),
     });
     tinyUrl = await Repository.save({ ...tinyUrl, clicks: tinyUrl.clicks + 1 });
     if (!tinyUrl.main_url)
@@ -60,7 +58,7 @@ export const statistics = async (
 ): Promise<void> => {
   try {
     const tinyUrl: TinyURLEntity = await TinyURLEntity.findOne({
-      tiny_url: `${req.protocol}://${req.hostname}:${process.env.PORT}/${req.params.url}`,
+      tiny_url: getUrl(req.params.url, req),
     });
     if (!tinyUrl?.main_url)
       res.status(HttpStatus.NOT_FOUND).json({ message: 'Record not found' });
@@ -76,9 +74,7 @@ export const visitUrl = async (req: Request, res: Response): Promise<any> => {
   const Repository = getRepository(TinyURLEntity);
   try {
     let tinyUrl: TinyURLEntity = await TinyURLEntity.findOne({
-      tiny_url: String(
-        `${req.protocol}://${req.hostname}:${process.env.PORT}/${req.params.url}`
-      ),
+      tiny_url: getUrl(req.params.url, req),
     });
     tinyUrl = await Repository.save({ ...tinyUrl, clicks: tinyUrl.clicks + 1 });
     if (!tinyUrl.main_url)
@@ -98,4 +94,12 @@ const randomString = (length: number): string => {
     result += CHARSET.charAt(Math.floor(Math.random() * charactersLength));
   }
   return '~' + result;
+};
+
+const getUrl = (url: string, req: Request): string => {
+  return String(
+    `${req.protocol}://${req.hostname}${
+      process.env.NODE_ENV === 'development' ? ':' + process.env.PORT : ''
+    }/${url}`
+  );
 };

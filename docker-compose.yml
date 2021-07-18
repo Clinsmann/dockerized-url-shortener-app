@@ -20,7 +20,7 @@ services:
     depends_on:
       - postgres
     environment:
-      - NODE_ENV=developement
+      - NODE_ENV=development
       - PORT=8000
       - DATABASE_URL=postgres://postgres:admin@postgres:5432/url_shortener
 

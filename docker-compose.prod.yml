@@ -12,12 +12,12 @@ services:
   application:
     build:
       context: .
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     ports:
       - "${PORT}:8000"
     env_file:
       - .env
     environment:
-      - NODE_ENV=${NODE_ENV}
+      - NODE_ENV=production
       - PORT=${PORT}
       - DATABASE_URL=${DATABASE_URL}
