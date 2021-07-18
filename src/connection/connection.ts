@@ -9,6 +9,7 @@ const config: ConnectionOptions = {
   migrations: ['dist/migrations/*{.ts,.js}'],
   entities: ['dist/entities/*{.ts,.js}'],
   cli: { migrationsDir: 'src/migrations' },
+  ssl: { rejectUnauthorized: false },
   logging: true,
 };
 
