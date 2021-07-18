@@ -5,18 +5,21 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
-} from "typeorm";
+} from 'typeorm';
 
-@Entity({ name: "tiny_urls" })
+@Entity({ name: 'tiny_urls' })
 class TinyURLEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ unique: true })
+  @Column({ unique: true, nullable: true })
   tiny_url!: string;
 
   @Column()
   main_url!: string;
+
+  @Column()
+  clicks!: number;
 
   @CreateDateColumn({ select: false })
   createdAt!: Date;

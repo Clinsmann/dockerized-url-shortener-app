@@ -17,7 +17,7 @@ module.exports = {
             {
                 trailingComma: 'es5',
                 singleQuote: true,
-                semi: false,
+                semi: true,
             },
         ],
         ...require('eslint-config-prettier').rules,
