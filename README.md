@@ -1,7 +1,7 @@
 ## `Tiny url app`
 
 Requirements to run the project locally
-1.  Ensure you have docker installed on your PC
+1.  Ensure you have docker installed on your PC, and it is running!
 
 ### `To run the application`
 
