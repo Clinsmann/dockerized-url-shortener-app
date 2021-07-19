@@ -9,6 +9,9 @@ cd into the project root folder and run
 
       docker-compose up
 
+Note this will take few minutes the first time you run it, to set up,
+database, dependencies, create needed connections and spin up the application
+
 Done! The app is ready for us locally
 
 ### `To stop the application`
