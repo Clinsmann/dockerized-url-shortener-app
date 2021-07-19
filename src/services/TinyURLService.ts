@@ -3,10 +3,8 @@ import HttpStatus from 'http-status-codes';
 import base62 from 'base62';
 import TinyURLEntity from '../entities/TinyURLEntity';
 import { getRepository } from 'typeorm';
+import { getUrl, randomString } from '../utils/helper';
 
-const CHARSET =
-  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-base62.setCharacterSet(CHARSET);
 const TINY_URL_LENGTH = 8;
 
 export const healthCheck = (req: Request, res: Response): void => {
@@ -86,21 +84,4 @@ export const visitUrl = async (req: Request, res: Response): Promise<any> => {
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
       .json({ message: 'error decoding url', error: e.message });
   }
-};
-
-export const randomString = (length: number): string => {
-  let result = '';
-  const charactersLength = CHARSET.length;
-  for (let i = 0; i < length; i++) {
-    result += CHARSET.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return '~' + result;
-};
-
-const getUrl = (url: string, req: Request): string => {
-  return String(
-    `${req.protocol}://${req.hostname}${
-      process.env.NODE_ENV === 'development' ? ':' + process.env.PORT : ''
-    }/${url}`
-  );
 };
