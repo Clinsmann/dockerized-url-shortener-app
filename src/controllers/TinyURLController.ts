@@ -1,12 +1,13 @@
 import express from 'express';
 
 const TinyURLController = express.Router();
-import * as HomeService from '../services/TinyURLService';
+import * as TinyURLService from '../services/TinyURLService';
 
 /* fetch Home */
-TinyURLController.get('/encode', HomeService.encode);
-TinyURLController.get('/decode/:url', HomeService.decode);
-TinyURLController.get('/statistics/:url', HomeService.statistics);
-TinyURLController.get('/:url', HomeService.visitUrl);
+TinyURLController.get('', TinyURLService.healthCheck);
+TinyURLController.get('/encode', TinyURLService.encode);
+TinyURLController.get('/decode/:url', TinyURLService.decode);
+TinyURLController.get('/statistics/:url', TinyURLService.stats);
+TinyURLController.get('/:url', TinyURLService.visitUrl);
 
 export default TinyURLController;

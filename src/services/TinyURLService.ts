@@ -9,6 +9,10 @@ const CHARSET =
 base62.setCharacterSet(CHARSET);
 const TINY_URL_LENGTH = 8;
 
+export const healthCheck = (req: Request, res: Response): void => {
+  res.status(HttpStatus.OK).json({ message: 'application up and running...' });
+};
+
 export const encode = async (req: Request, res: Response): Promise<void> => {
   const Repository = getRepository(TinyURLEntity);
   try {
@@ -52,10 +56,7 @@ export const decode = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const statistics = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const stats = async (req: Request, res: Response): Promise<void> => {
   try {
     const tinyUrl: TinyURLEntity = await TinyURLEntity.findOne({
       tiny_url: getUrl(req.params.url, req),
@@ -87,7 +88,7 @@ export const visitUrl = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-const randomString = (length: number): string => {
+export const randomString = (length: number): string => {
   let result = '';
   const charactersLength = CHARSET.length;
   for (let i = 0; i < length; i++) {
